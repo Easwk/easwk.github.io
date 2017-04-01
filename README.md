@@ -2,7 +2,6 @@
 #### ----传递action中的各种数据到store
 #### 关键点：你可以在任何地方调用store.dispatch(action),包括组件中、XHR回调、甚至定时器中。
 
-                //组件中调用
 		import React from 'react'
 		import { connect } from 'react-redux'
 		import { addTodo } from '../actions'
@@ -17,7 +16,7 @@
 		        if (!input.value.trim()) {
 		          return
 		        }
-		       ``dispatch(addTodo(input.value))``//调用该方法
+		       `dispatch(addTodo(input.value))`
 		        input.value = ''
 		      }}>
 		        <input ref={node => {
@@ -84,6 +83,6 @@
 ####  这个新的树就是应用的下一个state所有订阅store.subscribe(listener)的监听器都将被调用；监听器里可以调用store.getState()获得当前state。
 	
 ####  可以通过使用React Redux库的connect()方法生成容器组件，转入
-##### （1）mapStateToProps()、
-##### （2）mapDispatchToProps()
+##### *（1）mapStateToProps()
+##### *（2）mapDispatchToProps()
 ####  分别建立state与组件props，组件操作与action之间的映射关系。
