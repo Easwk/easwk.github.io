@@ -2,8 +2,7 @@
 #### ----传递action中的各种数据到store
 #### 关键点：你可以在任何地方调用store.dispatch(action),包括组件中、XHR回调、甚至定时器中。
 
-   
-    //组件中调用
+                //组件中调用
 		import React from 'react'
 		import { connect } from 'react-redux'
 		import { addTodo } from '../actions'
@@ -18,7 +17,7 @@
 		        if (!input.value.trim()) {
 		          return
 		        }
-		        dispatch(addTodo(input.value))//调用该方法
+		       ``dispatch(addTodo(input.value))``//调用该方法
 		        input.value = ''
 		      }}>
 		        <input ref={node => {
