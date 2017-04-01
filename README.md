@@ -83,6 +83,6 @@
 ####  这个新的树就是应用的下一个state所有订阅store.subscribe(listener)的监听器都将被调用；监听器里可以调用store.getState()获得当前state。
 	
 ####  可以通过使用React Redux库的connect()方法生成容器组件，转入
-##### *（1）mapStateToProps()
-##### *（2）mapDispatchToProps()
+##### *（1）mapStateToProps()*
+##### *（2）mapDispatchToProps()*
 ####  分别建立state与组件props，组件操作与action之间的映射关系。
