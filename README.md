@@ -3,22 +3,23 @@
 ----传递action中的各种数据到store
  
 关键点：你可以在任何地方调用store.dispatch(action),包括组件中、XHR回调、甚至定时器中。
-
-		import React from 'react'
+```
+                import React from 'react'
 		import { connect } from 'react-redux'
 		import { addTodo } from '../actions'
 
 		const AddTodo = ({ dispatch }) => {
 		let input
+
 		  return (
 		    <div>
 		      <form onSubmit={e => {
 		        e.preventDefault()
 		        if (!input.value.trim()) {
 		          return
-		        }			
-                        dispatch(addTodo(input.value))			
-                        input.value = ''
+		        }
+		        dispatch(addTodo(input.value))//调用该方法
+		        input.value = ''
 		      }}>
 		        <input ref={node => {
 		          input = node
@@ -33,6 +34,7 @@
 		AddTodo = connect()(AddTodo)
 		export default AddTodo
 		
+```		
 
 ### 2、store得到action开始调用传入的reducer函数。
 ---
@@ -47,7 +49,7 @@ store会把两个参数传入reducer: previousState(当前的树)和action。red
 { combineReducers()所做的只是生成一个函数，这个函数来调用你的一系列reducer，每个reducer根据它们的key来筛选出state 的一部分数据并处理，然后这个生成的函数再将所有 reducer 的结果合并成一个的对象。}
 
 **声明阶段：**声明根reducer即todoApp，并拆分为todos,visibleTodoFilter
-
+```
 				
 		function todos(state = [], action) {
 		       // 省略处理逻辑...
@@ -63,22 +65,22 @@ store会把两个参数传入reducer: previousState(当前的树)和action。red
 			todos,                   //key为todos
 			visibleTodoFilter        //key为visbleTodoFilter
 		})
-
+```
 ####  （1）上面combineReducers把根reducer拆分，各自声明逻辑.
 	
 **执行阶段：**触发action后combineReducers返回的todoApp调用两个子reducer，他们各自取得对应state部分（state.todos与state.visibeTodoFilter），处理相同action并各自返回新state。
- 
+``` 
 		let nextTodos = todos(state.todos, action);
 
 		let nextVisibleTodoFilter = visibleTodoFilter(state.visibleTodoFilter,action)
-
+```
 ####  (2) 上面combineReducers把两个结果集合并成一个新state树.
-		
+```		
 		return {
 			todos: nextTodos,
 			visibleTodoFilter: nextVisibleTodoFilter
 		};
-
+```
 ### 4、Redux store保存了根reducer返回的完整state树。
 ---	
 这个新的树就是应用的下一个state所有订阅store.subscribe(listener)的监听器都将被调用；监听器里可以调用store.getState()获得当前state。
