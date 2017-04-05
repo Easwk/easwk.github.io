@@ -3,7 +3,7 @@
 </a>
 
 
-## [redux数据流的4个步骤与技巧](https://github.com/easwk)
+## [redux数据流的4个步骤与技巧](https://github.com/Easwk/easwk.github.io/tree/gn-welcome)
 
 ### 1、首先调用store.dispatch(action)
 ---
