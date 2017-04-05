@@ -4,4 +4,5 @@
 
 
 ## [redux数据流的4个步骤与技巧](https://github.com/Easwk/easwk.github.io/tree/gn-welcome)
-
+  
+## [redux connect()方法生成容器组件](https://github.com/Easwk/easwk.github.io/pull/1)
