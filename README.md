@@ -50,7 +50,7 @@ store会把两个参数传入reducer: previousState(当前的树)和action。red
 	
 { combineReducers()所做的只是生成一个函数，这个函数来调用你的一系列reducer，每个reducer根据它们的key来筛选出state 的一部分数据并处理，然后这个生成的函数再将所有 reducer 的结果合并成一个的对象。}
 
-**声明阶段：**声明根reducer即todoApp，并拆分为todos,visibleTodoFilter
+**声明阶段：** 声明根reducer即todoApp，并拆分为todos,visibleTodoFilter
 ```
 				
 		function todos(state = [], action) {
@@ -70,7 +70,7 @@ store会把两个参数传入reducer: previousState(当前的树)和action。red
 ```
 ####  （1）上面combineReducers把根reducer拆分，各自声明逻辑.
 	
-**执行阶段：**触发action后combineReducers返回的todoApp调用两个子reducer，他们各自取得对应state部分（state.todos与state.visibeTodoFilter），处理相同action并各自返回新state。
+**执行阶段：** 触发action后combineReducers返回的todoApp调用两个子reducer，他们各自取得对应state部分（state.todos与state.visibeTodoFilter），处理相同action并各自返回新state。
 ``` 
 		let nextTodos = todos(state.todos, action);
 
