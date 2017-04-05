@@ -1,3 +1,5 @@
+## redux数据流的4个步骤与技巧
+
 ### 1、首先调用store.dispatch(action)
 ---
 ----传递action中的各种数据到store
