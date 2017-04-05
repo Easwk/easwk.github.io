@@ -17,9 +17,8 @@
 		        if (!input.value.trim()) {
 		          return
 		        }
-<font color=red size=6 face=“黑体”> dispatch(addTodo(input.value))</font>
-
-		        input.value = ''
+                        dispatch(addTodo(input.value))//调用		
+                        input.value = ''
 		      }}>
 		        <input ref={node => {
 		          input = node
