@@ -16,8 +16,8 @@
 		        e.preventDefault()
 		        if (!input.value.trim()) {
 		          return
-		        }
-                        dispatch(addTodo(input.value))//调用		
+		        }			
+                        dispatch(addTodo(input.value))			
                         input.value = ''
 		      }}>
 		        <input ref={node => {
@@ -32,6 +32,7 @@
 		}
 		AddTodo = connect()(AddTodo)
 		export default AddTodo
+		
 
 ### 2、store得到action开始调用传入的reducer函数。
 ---
