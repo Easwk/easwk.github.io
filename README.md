@@ -39,7 +39,9 @@ connect方法接受两个参数：mapStateToProps和mapDispatchToProps。它们�
 	  }
 	}
 	```
+	
 	上面代码中，mapStateToProps是一个函数，它接受state作为参数，返回一个对象。这个对象有一个todos属性，代表 UI 组件的同名参数，后面的getVisibleTodos也是一个函数，可以从state算出 todos 的值。
+    
     ```
 	const getVisibleTodos = (todos, filter) => {
 	  switch (filter) {
@@ -57,7 +59,8 @@ connect方法接受两个参数：mapStateToProps和mapDispatchToProps。它们�
     mapStateToProps会订阅 Store，每当state更新的时候，就会自动执行，重新计算 UI 组件的参数，从而触发 UI 组件的重新渲染。
 
     mapStateToProps的第一个参数总是state对象，还可以使用第二个参数，代表容器组件的props对象。
-    ```
+   
+   ```
     // 容器组件的代码
 	//    <FilterLink filter="SHOW_ALL">
 	//      All
@@ -69,6 +72,7 @@ connect方法接受两个参数：mapStateToProps和mapDispatchToProps。它们�
 	  }
 	}
 	```
+	
 	使用ownProps作为参数后，如果容器组件的参数发生变化，也会引发 UI 组件重新渲染。
 
 	connect方法可以省略mapStateToProps参数，那样的话，UI 组件就不会订阅Store，就是说 Store 的更新不会引起 UI 组件的更新。
@@ -105,33 +109,38 @@ connect方法接受两个参数：mapStateToProps和mapDispatchToProps。它们�
 	  };
 	}
     ```
-5、<Provider> 组件
-	connect方法生成容器组件以后，需要让容器组件拿到state对象，才能生成 UI 组件的参数。
+    
+5、<Provider> 组
 
-	一种解决方法是将state对象作为参数，传入容器组件。但是，这样做比较麻烦，尤其是容器组件可能在很深的层级，一级级将state传下去就很麻烦。
+connect方法生成容器组件以后，需要让容器组件拿到state对象，才能生成 UI 组件的参数。
+
+一种解决方法是将state对象作为参数，传入容器组件。但是，这样做比较麻烦，尤其是容器组件可能在很深的层级，一级级将state传下去就很麻烦。
 	
-	React-Redux 提供Provider组件，可以让容器组件拿到state。
-    ```
-	import { Provider } from 'react-redux'
-	import { createStore } from 'redux'
-	import todoApp from './reducers'
-	import App from './components/App'
+React-Redux 提供Provider组件，可以让容器组件拿到state。
 
-	let store = createStore(todoApp);
+```
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import todoApp from './reducers'
+import App from './components/App'
 
-	render(
+let store = createStore(todoApp);
+
+render(
 	  <Provider store={store}>
 	    <App />
 	  </Provider>,
 	  document.getElementById('root')
 	)
-	```
-	上面代码中，Provider在根组件外面包了一层，这样一来，App的所有子组件就默认都可以拿到state了。
+```
+	
+上面代码中，Provider在根组件外面包了一层，这样一来，App的所有子组件就默认都可以拿到state了。
 
-	它的原理是React组件的context属性，请看源码。
-	```
-	class Provider extends Component {
-	  getChildContext() {
+它的原理是React组件的context属性，请看源码。
+	
+```
+class Provider extends Component {
+	 getChildContext() {
 	    return {
 	      store: this.props.store
 	    };
@@ -143,11 +152,13 @@ connect方法接受两个参数：mapStateToProps和mapDispatchToProps。它们�
 
 	Provider.childContextTypes = {
 	  store: React.PropTypes.object
-	}
-	```
-	上面代码中，store放在了上下文对象context上面。然后，子组件就可以从context拿到store，代码大致如下。
+	}	
+```
+	
+上面代码中，store放在了上下文对象context上面。然后，子组件就可以从context拿到store，代码大致如下。
 
-	```
+	
+```
 	class VisibleTodoList extends Component {
 	  componentDidMount() {
 	    const { store } = this.context;
@@ -167,6 +178,6 @@ connect方法接受两个参数：mapStateToProps和mapDispatchToProps。它们�
 	VisibleTodoList.contextTypes = {
 	  store: React.PropTypes.object
 	}
-	```
+```
 
-	React-Redux自动生成的容器组件的代码，就类似上面这样，从而拿到store。
+React-Redux自动生成的容器组件的代码，就类似上面这样，从而拿到store。
