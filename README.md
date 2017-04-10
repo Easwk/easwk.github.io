@@ -18,6 +18,8 @@ React组件提供了生命周期的钩子函数去响应组件不同时刻的状
 
 ![image](https://github.com/Easwk/react/blob/master/componentlifecycel.png)
 
+![image](https://github.com/Easwk/react/blob/master/ajs-life.png)
+
 1、实例化
 
 首次调用组件时，有以下方法会被调用（注意顺序，从上到下先后执行）：
