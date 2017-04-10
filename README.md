@@ -12,3 +12,5 @@
 ## [3、react组件生命周期 ](https://github.com/Easwk/easwk.github.io/tree/react-componetn-lifecycel)
 
 ## [4、react-解密setState](https://github.com/Easwk/easwk.github.io/tree/react-setState)
+
+## [5、react组件数据流&&组件沟通](https://github.com/Easwk/easwk.github.io/tree/react-shujuliu-zhujiangtongxing)
