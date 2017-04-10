@@ -16,10 +16,7 @@ React组件提供了生命周期的钩子函数去响应组件不同时刻的状
 
 钩子函数是我们重点关注的地方，下面来详细了解下生命周期下的钩子函数调用顺序和作用。每个生命周期阶段调用的钩子函数会略有不同。下面的图片或许对你有帮助。
 
-
-
-
-
+![image](https://github.com/Easwk/react/blob/master/componentlifecycel.png)
 
 1、实例化
 
