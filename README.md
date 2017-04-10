@@ -175,8 +175,5 @@ unstable_batchedUpdates(() => {
 
 当然因为这个不是公开的 API，后续存在废弃的风险，大家在业务系统里慎用哟！
 
-注释
-
-1.	test-react 文中测试代码已放在 Github 上，需要自己实验探索的同学可以 clone 下来自己断点调试。
-
-2.	为了避免引入更多的概念，上文中所说到的 batchingStrategy 均指 ReactDefaultBatchingStrategy，该 strategy 在 React 初始化时由 ReactDefaultInjection 注入到 ReactUpdates 中作为默认的 strategy。在 server 渲染时，则会注入不同的 strategy，有兴趣的同学请自行探索。
+注释:
+为了避免引入更多的概念，上文中所说到的 batchingStrategy 均指 ReactDefaultBatchingStrategy，该 strategy 在 React 初始化时由 ReactDefaultInjection 注入到 ReactUpdates 中作为默认的 strategy。在 server 渲染时，则会注入不同的 strategy，有兴趣的同学请自行探索。
