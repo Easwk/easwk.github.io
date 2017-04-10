@@ -199,9 +199,9 @@ Button.contextTypes = {
 
 function Message(props){
 	return(
-			<li>
-				props.text<Button Delete></Button>
-			</li>
+		<li>
+		  props.text<Button>Delete</Button>
+		</li>
 		);
 }
 
@@ -249,24 +249,24 @@ export default MessageList;
 
 3）在按钮组件中，首选传递父组件的props和全局的context,然后渲染一个普通的按钮，并声明式的定义它的背景颜色为context.color。如果没定义contextTypes，context将会是空对象；
 
-另外，无状态组件可以直接在函数参数中获取context，而又状态组件可以通过this.context和生命周期函数获取context；
+另外，无状态组件可以直接在函数参数中获取context，而有状态组件可以通过this.context和生命周期函数获取context；
 
 ---
 
 ##### 3、使用场景
 
-##### React的context和全局变量相似，应避免使用，场景包括：传递登录信息、当前语音以及主题信息；
+ React的context和全局变量相似，应避免使用，场景包括：传递登录信息、当前语音以及主题信息；
 
-##### 如果只传递一些功能模块数据，则尽量不要使用context，使用props传递数据会更加清晰；
+ 如果只传递一些功能模块数据，则尽量不要使用context，使用props传递数据会更加清晰；
 
-##### 使用context会使组件的复用性降低，因为这些组件依赖'上下文'，当你在别的地方渲染的时候，可能会出现差异；
+ 使用context会使组件的复用性降低，因为这些组件依赖'上下文'，当你在别的地方渲染的时候，可能会出现差异；
 
 #### 五、总结
 
-##### 1、state称为内部状态或者局部状态，内部状态的操作配合React事件系统，可以实现用户交互的功能
+ 1、state称为内部状态或者局部状态，内部状态的操作配合React事件系统，可以实现用户交互的功能
 
-##### 2、Props与context则用于在组件间传递数据。使用props传递数据简单清晰，但是跨级传递非常麻烦。
+ 2、Props与context则用于在组件间传递数据。使用props传递数据简单清晰，但是跨级传递非常麻烦。
 
 ##### 使用context可以跨级传递数据，但是会降低组件的复用性，因为这些组件依赖“上下文”，。所有尽量只使用context传递登录状态、颜色主题等全局数据。
 
-##### 3、在React开发者工具中，可以清晰地看到每个组件的state、props以及context等信息，便于开发和调试。
+ 3、在React开发者工具中，可以清晰地看到每个组件的state、props以及context等信息，便于开发和调试。
