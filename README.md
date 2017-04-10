@@ -43,6 +43,7 @@ class Example extends React.Component {
 
 #### setState 干了什么
  
+ ![image](https://github.com/Easwk/react/blob/master/setState.png)
  
 上面这个流程图是一个简化的 setState 调用栈，注意其中核心的状态判断，在源码(ReactUpdates.js)中
 
@@ -84,32 +85,8 @@ var batchingStrategy = {
 
 熟悉 MySQL 的同学看到 Transaction 是否会心一笑？然而在 React 中 Transaction 的原理和行为和 MySQL 中并不完全相同，让我们从源码开始一步步开始了解。
 在 Transaction 的源码中有一幅特别的 ASCII 图，形象的解释了 Transaction 的作用。
-/*
- * <pre>
- *                       wrappers (injected at creation time)
- *                                      +        +
- *                                      |        |
- *                    +-----------------|--------|--------------+
- *                    |                 v        |              |
- *                    |      +---------------+   |              |
- *                    |   +--|    wrapper1   |---|----+         |
- *                    |   |  +---------------+   v    |         |
- *                    |   |          +-------------+  |         |
- *                    |   |     +----|   wrapper2  |--------+   |
- *                    |   |     |    +-------------+  |     |   |
- *                    |   |     |                     |     |   |
- *                    |   v     v                     v     v   | wrapper
- *                    | +---+ +---+   +---------+   +---+ +---+ | invariants
- * perform(anyMethod) | |   | |   |   |         |   |   | |   | | maintained
- * +----------------->|-|---|-|---|-->|anyMethod|---|---|-|---|-|-------->
- *                    | |   | |   |   |         |   |   | |   | |
- *                    | |   | |   |   |         |   |   | |   | |
- *                    | |   | |   |   |         |   |   | |   | |
- *                    | +---+ +---+   +---------+   +---+ +---+ |
- *                    |  initialize                    close    |
- *                    +-----------------------------------------+
- * </pre>
- */
+
+![image](https://github.com/Easwk/react/blob/master/122.png)
  
 简单地说，一个所谓的 Transaction 就是将需要执行的 method 使用 wrapper 封装起来，再通过 Transaction 提供的 perform 方法执行。
 而在 perform 之前，先执行所有 wrapper 中的 initialize 方法；perform 完成之后（即 method 执行后）再执行所有的 close 方法。
@@ -161,9 +138,12 @@ transaction.perform(testMethod);
 
 那么 Transaction 跟 setState 的不同表现有什么关系呢？首先我们把 4 次 setState 简单归类，前两次属于一类，因为他们在同一次调用栈中执行；setTimeout 中的两次 setState 属于另一类，原因同上。让我们分别看看这两类 setState 的调用栈：
  
+![image](https://github.com/Easwk/react/blob/master/961aed5b866146dff1707fb0c43914d2_b.jpg)
+
 componentDidMout 中 setState 的调用栈
 
- 
+![image](https://github.com/Easwk/react/blob/master/444c2862d8bb4be66ab2ceb370dcbe9c_b.jpg)
+
 setTimeout 中 setState 的调用栈
 
 
