@@ -1,96 +1,110 @@
+### react组件生命周期
 
-## redux数据流的4个步骤与技巧
+1、前言
 
-### 1、首先调用store.dispatch(action)
----
-----传递action中的各种数据到store
- 
-关键点：你可以在任何地方调用store.dispatch(action),包括组件中、XHR回调、甚至定时器中。
+组件会随着组件的props和state改变而发生变化，它的DOM也会有相应的变化。
+
 ```
-                import React from 'react'
-		import { connect } from 'react-redux'
-		import { addTodo } from '../actions'
-
-		const AddTodo = ({ dispatch }) => {
-		let input
-
-		  return (
-		    <div>
-		      <form onSubmit={e => {
-		        e.preventDefault()
-		        if (!input.value.trim()) {
-		          return
-		        }
-		        dispatch(addTodo(input.value))//调用该方法
-		        input.value = ''
-		      }}>
-		        <input ref={node => {
-		          input = node
-		        }} />
-		        <button type="submit">
-		          Add Todo
-		        </button>
-		      </form>
-		    </div>
-		  )
-		}
-		AddTodo = connect()(AddTodo)
-		export default AddTodo
-```		
-
-### 2、store得到action开始调用传入的reducer函数。
----
-store会把两个参数传入reducer: previousState(当前的树)和action。reducer处理后返回一个新state树（nextState）。
-
-注：state树。reducer是纯函数：多次传入相同的输入必须产生相同的输出。它不应做有副作用的操作，如 API 调⽤或路由跳转。这些应该在 dispatch action 前发送。
-
-### 3、reducer开始处理参数，返回state树。
----    
-在这里一般把根reducer拆分成多个子reducer函数分别处理state树的一个分支，然后在输出合并成一个单一的state树。Redux提供combineReducers()辅助函数来满足以上两个作用。
-	
-{ combineReducers()所做的只是生成一个函数，这个函数来调用你的一系列reducer，每个reducer根据它们的key来筛选出state 的一部分数据并处理，然后这个生成的函数再将所有 reducer 的结果合并成一个的对象。}
-
-**声明阶段：** 声明根reducer即todoApp，并拆分为todos,visibleTodoFilter
+一个组件就是一个状态机：对于特定的输入，它总会返回一致的输出。
 ```
-				
-		function todos(state = [], action) {
-		       // 省略处理逻辑...
-			return nextState;
-		}
 
-		function visibleTodoFilter(state = 'SHOW_ALL', action) {
-			// 省略处理逻辑...
-			return nextState;
-		}
+React组件提供了生命周期的钩子函数去响应组件不同时刻的状态，组件的生命周期如下：
 
-		let todoApp = combineReducers({
-			todos,                   //key为todos
-			visibleTodoFilter        //key为visbleTodoFilter
-		})
-```
-####  （1）上面combineReducers把根reducer拆分，各自声明逻辑.
-	
-**执行阶段：** 触发action后combineReducers返回的todoApp调用两个子reducer，他们各自取得对应state部分（state.todos与state.visibeTodoFilter），处理相同action并各自返回新state。
-``` 
-		let nextTodos = todos(state.todos, action);
+	实例化
+	存在期
+	销毁期
 
-		let nextVisibleTodoFilter = visibleTodoFilter(state.visibleTodoFilter,action)
+钩子函数是我们重点关注的地方，下面来详细了解下生命周期下的钩子函数调用顺序和作用。每个生命周期阶段调用的钩子函数会略有不同。下面的图片或许对你有帮助。
+
+2、实例化
+
+首次调用组件时，有以下方法会被调用（注意顺序，从上到下先后执行）：
+
+##### getDefaultProps
+
+这个方法是用来设置组件默认的props，组件生命周期只会调用一次。但是只适合React.createClass直接创建的组件，使用ES6/ES7创建的这个方法不可使用，ES6/ES7可以使用下面方式：
+
 ```
-####  (2) 上面combineReducers把两个结果集合并成一个新state树.
-```		
-		return {
-			todos: nextTodos,
-			visibleTodoFilter: nextVisibleTodoFilter
-		};
+//es7
+class Component {
+  static defaultProps = {}
+}
+//或者也可以在外面定义es6
+//Compnent.defaultProps
 ```
-### 4、Redux store保存了根reducer返回的完整state树。
----	
-这个新的树就是应用的下一个state所有订阅store.subscribe(listener)的监听器都将被调用；监听器里可以调用store.getState()获得当前state。
-	
-可以通过使用React Redux库的connect()方法生成容器组件，转入
-  
- *（1）mapStateToProps()*
- 
- *（2）mapDispatchToProps()*
- 
-分别建立state与组件props，组件操作与action之间的映射关系。
+
+##### getInitialState
+
+设置state初始值，在这个方法中你已经可以访问到this.props。getDefaultProps只适合React.createClass使用。使用ES6初始化state方法如下：
+
+```
+class Component extends React.Component{
+  constructor(){
+    this.state = {
+      render: true,
+    }
+  }
+}
+```
+
+##### componentWillMount
+
+该方法会在组件首次渲染之前调用，这个是在render方法调用前可修改state的最后一次机会。这个方法很少用到。
+
+##### render
+
+这个方法以后大家都应该会很熟悉，JSX通过这里，解析成对应的虚拟DOM，渲染成最终效果。格式大致如下：
+
+```
+class Component extends React.Component{
+  render(){
+    return (
+        <div></div>
+    )
+  }
+}
+```
+
+##### componentDidMount
+
+这个方法在首次真实的DOM渲染后调用（仅此一次）当我们需要访问真实的DOM时，这个方法就经常用到。访问真实的DOM与refs有关。当我们需要请求外部接口数据，一般都在这里处理。
+
+3、存在期
+
+实例化后，当props或者state发生变化时，下面方法依次被调用：
+
+##### componentWillReceiveProps
+
+每当我们通过父组件更新子组件props时（这个也是唯一途径），这个方法就会被调用。
+
+```
+componentWillReceiveProps(nextProps){}
+```
+
+##### shouldComponentUpdate
+
+字面意思，是否应该更新组件，默认返回true。当返回false时，后期函数就不会调用，组件不会在次渲染。
+
+```
+shouldComponentUpdate(nextProps,nextState){}
+```
+
+##### componentWillUpdate
+
+字面意思组件将会更新，props和state改变后必调用。
+
+##### render
+
+跟实例化时的render一样，不多说.
+
+##### componentDidUpdate
+
+这个方法在更新真实的DOM成功后调用，当我们需要访问真实的DOM时，这个方法就也经常用到。
+
+4、销毁期
+
+销毁阶段，只有一个函数被调用：
+
+##### componentWillUnmount
+
+每当组件使用完成，这个组件就必须从DOM中销毁，此时该方法就会被调用。当我们在组件中使用了setInterval，那我们就需要在这个方法中调用clearTimeout。
