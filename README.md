@@ -5,8 +5,8 @@
 
 
 
-## [redux数据流的4个步骤与技巧](https://github.com/Easwk/easwk.github.io/tree/redux--4stepsforstate)
+## [1、redux数据流的4个步骤与技巧 2017-03-20](https://github.com/Easwk/easwk.github.io/tree/redux--4stepsforstate)
 
-## [react-connect()方法生成容器组件](https://github.com/Easwk/easwk.github.io/tree/redux-connect)
+## [2、react-connect()方法生成容器组件 2017-04-1](https://github.com/Easwk/easwk.github.io/tree/redux-connect)
 
-## [react组件生命周期](https://github.com/Easwk/easwk.github.io/tree/react-componetn-lifecycel)
+## [3、react组件生命周期 2017-04-10](https://github.com/Easwk/easwk.github.io/tree/react-componetn-lifecycel)
