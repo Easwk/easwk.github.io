@@ -10,3 +10,5 @@
 ## [2、react-connect()方法生成容器组件](https://github.com/Easwk/easwk.github.io/tree/redux-connect) 
 
 ## [3、react组件生命周期 ](https://github.com/Easwk/easwk.github.io/tree/react-componetn-lifecycel)
+
+## [4、react-解密setState](https://github.com/Easwk/easwk.github.io/tree/react-setState)
