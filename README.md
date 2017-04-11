@@ -22,3 +22,5 @@
 ## [8、react生命周期、数据流与事件](https://github.com/Easwk/easwk.github.io/tree/react-shijian)
 
 ## [9、react-dangerouslySetInnerHTML](https://github.com/Easwk/easwk.github.io/tree/react-dangerouslySetInnerHTML)
+
+## [10、react三种组件创建方式对比](https://github.com/Easwk/easwk.github.io/tree/react-three-way-to-create-components)
