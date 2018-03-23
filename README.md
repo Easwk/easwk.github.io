@@ -25,7 +25,8 @@
 ## 技巧
  
 ---
-####浏览器检查
+#### 浏览器检查
+ 
 ···
  // Browser environment sniffing
 var inBrowser = typeof window !== 'undefined';
@@ -41,4 +42,5 @@ var isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
 
 // Firefox has a "watch" function on Object.prototype...
 var nativeWatch = ({}).watch;
+
 ···
