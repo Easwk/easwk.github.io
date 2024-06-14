@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -134,6 +134,7 @@
       </el-input>
       </el-input>
       <el-button @click="startHandle">start</el-button>
+      <el-button @click="clearHandle">clear</el-button>
 
     </span>
 
@@ -257,7 +258,7 @@
     data: function () {
       return {
         textarea2: '哈哈哈！！！ 哈哈！！哈！',
-        textarea1: '我太喜欢夏天了，热得我脑瓜子直冒汗。这么多年脑瓜子进的水，这回可算是彻底排出来了。估计我以后会越来越聪明，嘿嘿。',
+        textarea1: '我太喜欢夏天了，热得我脑瓜子直冒汗。',
         showEnd: false,
         speed: 200,
         people1: 'L..Ha',
@@ -267,6 +268,10 @@
     methods: {
       startHandle() {
         this.typeFn()
+      },
+      clearHandle(){
+        this.textarea1 = ''
+        document.getElementById('output').innerHTML = ` `
       },
       typeFn() {
         // 配置对象
