@@ -10,7 +10,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-  <script src="https://cdn.jsdelivr.net/npm/easy-typer-js@1.0.3/easy-typer-min.js"> </script>
   <!-- import Vue before Element -->
   <script src="https://unpkg.com/vue@2/dist/vue.js"></script>
   <!-- import JavaScript -->
@@ -23,28 +22,28 @@
     .content {
       height: 2000px;
       background: #000;
-      padding: 10px;
+      padding: 2px;
       padding-top: 40px;
       letter-spacing: 3px;
+      color: white;
     }
 
-    .row {
-      width: 600px;
+    #output {
+      width: 330px;
       word-spacing: 2px;
-
       color: white;
       padding-left: 10px;
-
-      line-height: 2;
+      white-space: break-spaces;
+      line-height: 1.4;
     }
 
     .icon {
-
+      margin-right: 10px;
       width: 42px;
       height: 42px;
       border: 1px solid #fff;
       border-radius: 12px;
-      background: #f4fa9b;
+      background: #f9fbdd;
       text-align: center;
       color: #c0c2bd;
       box-shadow: 0px 0px 16px 5px rgb(188 171 235 / 74%);
@@ -63,6 +62,7 @@
     .wrap {
       display: flex;
     }
+
 
     .endWrap {
       margin-top: 60px;
@@ -98,7 +98,7 @@
 
     @keyframes bounce-in2 {
       0% {
-        transform: scale(0.6) translateX(100px) translateY(-50px);
+        transform: scale(0.6) translateX(100px) translateY(-20px);
 
       }
 
@@ -112,7 +112,34 @@
 
       }
     }
+
+    /* // 光标字符显示 */
+    .typing::after {
+      content: '▌';
+    }
+
+    /* // 光标闪烁动画 */
+    .blinker::after {
+      animation: blinker 1s step-end infinite;
+    }
+
+    @keyframes blinker {
+      0% {
+        visibility: visible;
+      }
+
+      50% {
+        visibility: hidden;
+      }
+
+      100% {
+        visibility: visible;
+      }
+    }
+     
+     
   </style>
+
 
 </head>
 
@@ -122,7 +149,7 @@
     <span style="display:flex">
 
 
-      <el-input placeholder="请输入内容" v-model="textarea1">
+      <el-input placeholder="请输入内容" type="textarea" v-model="textarea1">
       </el-input>
       <el-input placeholder="请输入内容" v-model="textarea2">
       </el-input>
@@ -163,7 +190,7 @@
 
 
 
-        <div id="output" class="row">
+        <div id="output"  >
         </div>
       </div>
       <div class="endWrap" v-show="showEnd">
@@ -253,15 +280,56 @@
   </div>
 </body>
 <script>
+
+  /**
+   * @description:
+   * @param {HTMLElement} dom - 打印内容的dom
+   * @param {string} content - 打印文本内容
+   * @param {number} speed - 打印速度
+   * @return {void}
+   */
+  function printText(dom, content, speed = 50, cb) {
+
+    let index = 0
+    setCursorStatus(dom, 'typing')
+    let printInterval = setInterval(() => {
+      dom.innerText += content[index]
+      index++
+      if (index >= content.length) {
+        setCursorStatus(dom, 'end')
+        cb()
+        clearInterval(printInterval)
+      }
+    }, speed)
+  }
+
+  /**
+   * @description: 设置dom的光标状态
+   * @param {HTMLElement} dom - 打印内容的dom
+   * @param {"loading"|"typing"|"end"} status - 打印状态
+   * @return {void}
+   */
+  function setCursorStatus(dom, status) {
+    const classList = {
+      loading: 'typing blinker',
+      typing: 'typing',
+      end: '',
+    }
+    dom.className = classList[status]
+  }
+
+
+
+
   new Vue({
     el: '#app',
     data: function () {
       return {
-        textarea2: '哈哈哈！！！ 哈哈！！哈！',
-        textarea1: '我太喜欢夏天了，热得我脑瓜子直冒汗。',
+        textarea2: '哈哈！！',
+        textarea1: '我太喜欢夏天了， 热得我脑瓜子直冒汗。我太喜欢夏天了，\t\r热得我脑瓜子直冒汗。',
         showEnd: false,
-        speed: 200,
-        people1: 'L..Ha',
+        speed: 100,
+        people1: 'L.Ha.',
         people2: '我'
       }
     },
@@ -269,43 +337,58 @@
       startHandle() {
         this.typeFn()
       },
-      clearHandle(){
+      clearHandle() {
         this.textarea1 = ''
         this.showEnd = false
         document.getElementById('output').innerHTML = ` `
       },
       typeFn() {
-        // 配置对象
-        const obj = {
-          output: '',
-          isEnd: false,
-          speed: Number(this.speed),
-          singleBack: false,
-          sleep: 0,
-          type: 'normal',
-          backSpeed: 40,
-          sentencePause: false
-        }
+
+
+        const dom = document.getElementById('output')
+        const content = this.textarea1
+        const speed = this.speed
+
         let self = this
         self.showEnd = false
-        const typing = new EasyTyper(obj, this.textarea1,
-          instance => {
-            // 回调函数
-            // 此回调一般用于获取新的数据然后循环输出
-            // instance { 实例EasyTyper }
-            console.log(instance) // 打印出实例对象
-            setTimeout(() => {
-              self.showEnd = true
+        dom.innerText = ''
+        printText(dom, content, speed, () => {
+          setTimeout(() => {
+            self.showEnd = true
 
-            }, 500)
+          }, 500)
+        })
+        // 配置对象
+        // const obj = {
+        //   output: '',
+        //   isEnd: false,
+        //   speed: Number(this.speed),
+        //   singleBack: false,
+        //   sleep: 0,
+        //   type: 'normal',
+        //   backSpeed: 40,
+        //   sentencePause: false
+        // }
+        // let self = this
+        // self.showEnd = false
+        // const typing = new EasyTyper(obj, this.textarea1,
+        //   instance => {
+        //     // 回调函数
+        //     // 此回调一般用于获取新的数据然后循环输出
+        //     // instance { 实例EasyTyper }
+        //     console.log(instance) // 打印出实例对象
+        //     setTimeout(() => {
+        //       self.showEnd = true
 
-          }, (output, instance) => {
-            // 钩子函数
-            // output { 当前帧的输出内容 }
-            // instance { 实例EasyTyper }
-            // 通过钩子函数动态更新dom元素
-            document.getElementById('output').innerHTML = `${output}`
-          })
+        //     }, 500)
+
+        //   }, (output, instance) => {
+        //     // 钩子函数
+        //     // output { 当前帧的输出内容 }
+        //     // instance { 实例EasyTyper }
+        //     // 通过钩子函数动态更新dom元素
+        //     document.getElementById('output').innerHTML = `${output}`
+        //   })
       },
 
 
