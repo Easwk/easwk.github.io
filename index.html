@@ -93,7 +93,8 @@
 
     .hhhhh {
       animation: bounce-in2 1s;
-      margin-right: 10px
+      margin-right: 10px;
+      white-space: break-spaces;
     }
 
     @keyframes bounce-in2 {
@@ -136,8 +137,6 @@
         visibility: visible;
       }
     }
-     
-     
   </style>
 
 
@@ -147,24 +146,24 @@
 
   <div id="app">
     <span style="display:flex">
-
-
       <el-input placeholder="请输入内容" type="textarea" v-model="textarea1">
       </el-input>
-      <el-input placeholder="请输入内容" v-model="textarea2">
-      </el-input>
+      <el-input placeholder="请输入内容" type="textarea" v-model="textarea2">
+      </el-input> 
+    </span>
+
+    <span style="display:flex">
       <el-input placeholder="请输入内容" v-model="speed">
       </el-input>
       <el-input placeholder="请输入内容" v-model="people2">
       </el-input>
       <el-input placeholder="请输入内容" v-model="people1">
       </el-input>
-      </el-input>
+
+     
       <el-button @click="startHandle">start</el-button>
       <el-button @click="clearHandle">clear</el-button>
-
     </span>
-
 
 
     <div class="content">
@@ -190,7 +189,7 @@
 
 
 
-        <div id="output"  >
+        <div id="output">
         </div>
       </div>
       <div class="endWrap" v-show="showEnd">
